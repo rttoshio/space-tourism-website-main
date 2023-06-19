@@ -325,11 +325,24 @@ select {
 }
 
 .primary-navigation {
-  --gap: 8rem;
   --underline-gap: 2rem;
   list-style: none;
   padding: 0;
   margin: 0;
+  background: hsl(var(--clr-white) / 0.1);
+}
+
+@media (max-width: 35rem) {
+  .primary-navigation {
+    --underline-gap: 0.5rem;
+    position: fixed;
+    inset: 0 0 0 30%;
+    z-index: 1000;
+    list-style: none;
+    padding: min(20rem, 15vh) 2rem;
+    margin: 0;
+    flex-direction: column;
+  }
 }
 
 .primary-navigation a {
@@ -348,15 +361,22 @@ select {
   border-bottom: 0.2rem solid hsl(var(--clr-white) / 0);
 }
 
-.underline-indicators > *:hover,
 .underline-indicators > *:focus {
   border-color: hsl(var(--clr-white) / 0.5);
 }
 
-.underline-indicators > .active,
-.underline-indicators > [aria-selected="true"] {
-  color: hsl(var(--clr-white) / 1);
-  border-color: hsl(var(--clr-white) / 1);
+@media (hover: hover) {
+  .underline-indicators > *:hover {
+    border-color: hsl(var(--clr-white) / 0.5);
+  }
+}
+
+@media (min-width: 35rem) {
+  .underline-indicators > .active,
+  .underline-indicators > [aria-selected="true"] {
+    color: hsl(var(--clr-white) / 1);
+    border-color: hsl(var(--clr-white) / 1);
+  }
 }
 
 .tab-list {
