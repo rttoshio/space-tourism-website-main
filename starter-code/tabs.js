@@ -16,28 +16,26 @@ function changeTabFocus(e) {
   // change the tabindex of the current tab to -1
   if (e.keyCode === keydownLeft || e.keyCode === keydownRight) {
     tabs[tabFocus].setAttribute("tabindex", -1);
-  }
-
-  // if the right key is pushed, move to the next tab on the right
-  if (e.keyCode === keydownRight) {
-    tabFocus++;
-    if (tabFocus >= tabs.length) {
-      tabFocus = 0;
+    // if the right key is pushed, move to the next tab on the right
+    if (e.keyCode === keydownRight) {
+      tabFocus++;
+      if (tabFocus >= tabs.length) {
+        tabFocus = 0;
+      }
     }
-  }
-
-  // if the left key is pushed, move to the next tab on the left
-
-  if (e.keyCode === keydownLeft) {
-    tabFocus--;
-    console.log(tabFocus);
-    if (tabFocus < 0) {
-      tabFocus = tabs.length - 1;
+    // if the left key is pushed, move to the next tab on the left
+    else if (e.keyCode === keydownLeft) {
+      tabFocus--;
+      console.log(tabFocus);
+      if (tabFocus < 0) {
+        tabFocus = tabs.length - 1;
+      }
     }
-  }
+    // if the left key is pushed, move to the next tab on the left
 
-  tabs[tabFocus].setAttribute("tabindex", 0);
-  tabs[tabFocus].focus();
+    tabs[tabFocus].setAttribute("tabindex", 0);
+    tabs[tabFocus].focus();
+  }
 }
 
 function changeTabPanel(e) {
@@ -52,21 +50,23 @@ function changeTabPanel(e) {
     .querySelector('[aria-selected="true"]')
     .setAttribute("aria-selected", false);
 
-  //tab selection
-  mainContainer
-    .querySelectorAll('[role="tabpanel"]')
-    .forEach((article) => article.setAttribute("hidden", true));
-
   targetTab.setAttribute("aria-selected", true);
 
-  mainContainer.querySelector([`#${targetPanel}`]).removeAttribute("hidden");
+  //tab selection
+  hideContent(mainContainer, '[role="tabpanel"]');
+  showContent(mainContainer, `#${targetPanel}`);
 
   // picture selection//
-  mainContainer
-    .querySelectorAll("picture")
-    .forEach((pic) => pic.setAttribute("hidden", true));
+  hideContent(mainContainer, "picture");
+  showContent(mainContainer, `#${targetImage}`);
+}
 
-  mainContainer.querySelector([`#${targetImage}`]).removeAttribute("hidden");
+function hideContent(parent, content) {
+  parent
+    .querySelectorAll(content)
+    .forEach((item) => item.setAttribute("hidden", true));
+}
 
-  console.log(mainContainer);
+function showContent(parent, content) {
+  parent.querySelector(content).removeAttribute("hidden");
 }
